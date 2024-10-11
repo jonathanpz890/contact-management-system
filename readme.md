@@ -14,7 +14,7 @@ This is the backend API for the Contact Management System, which provides endpoi
 
 Clone the repository: 
 ```bash 
-git clone https://github.com/your-repo/api.git 
+git clone https://github.com/jonathanpz890/contact-management-system-api.git
 ```
 
 Install dependencies: 
