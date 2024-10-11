@@ -30,7 +30,7 @@ sequelize.sync().then(() => {
             sequelize.close().then(() => {
                 console.log('Database connection closed.');
                 process.exit(0);
-            }).catch(error => {
+            }).catch((error: any) => {
                 console.error('Error while closing database connection:', error);
                 process.exit(1);
             });
