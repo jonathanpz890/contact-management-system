@@ -4,11 +4,11 @@
 This is the backend API for the Contact Management System, which provides endpoints for managing contacts and groups. It uses Node.js, Express, and Sequelize to interact with an MSSQL database and handle CRUD operations.
 
 ## Tech Stack
-* Node.js (JavaScript runtime)
-* Express (Web framework)
-* TypeScript (Static type checking)
-* Sequelize (ORM for MSSQL)
-* MSSQL (Database)
+* Node.js
+* Express
+* TypeScript
+* Sequelize
+* MSSQL
 
 ## How to Run
 
