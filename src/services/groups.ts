@@ -7,16 +7,16 @@ export const createGroup = async (req: Request, res: Response): Promise<void> =>
     try {
         const group = await Group.create(req.body);
         res.status(201).json(group);
-    } catch (err: any) {
-        handleResponseError(res, err);
+    } catch (error: any) {
+        handleResponseError(res, error);
     }
 }
 export const getAllGroups = async (req: Request, res: Response): Promise<void> => {
     try {
         const groups = await Group.findAll();
         res.json(groups);
-    } catch (err: any) {
-        handleResponseError(res, err);
+    } catch (error: any) {
+        handleResponseError(res, error);
     }
 }
 export const deleteGroup = async (req: Request, res: Response): Promise<void> => {
@@ -28,7 +28,7 @@ export const deleteGroup = async (req: Request, res: Response): Promise<void> =>
         }
         await group.destroy();
         res.json({ message: 'Group deleted' });
-    } catch (err: any) {
-        handleResponseError(res, err);
+    } catch (error: any) {
+        handleResponseError(res, error);
     }
 }
