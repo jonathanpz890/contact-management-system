@@ -1,25 +1,52 @@
-import { Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
+import Contact from './contact';
+import Group from './group';
 
-import dotenv from 'dotenv';
-dotenv.config();
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
 
-export const sequelize = new Sequelize(
-  process.env.DB_NAME as string,
-  process.env.DB_USER as string,
-  process.env.DB_PASSWORD as string,
-  {
-    host: process.env.DB_HOST,
-    dialect: 'mssql',
-    port: parseInt(process.env.DB_PORT as string) || 1433,
-    logging: false,
-  }
-);
+const sequelize = config.url
+    ? new Sequelize(config.url, config)
+    : new Sequelize(config.database, config.username, config.password, config);
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection to the database has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-})();
+Contact.init({
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    firstName: { type: DataTypes.STRING, allowNull: false },
+    lastName: { type: DataTypes.STRING, allowNull: false },
+    country: { type: DataTypes.STRING, allowNull: false },
+    city: { type: DataTypes.STRING, allowNull: false },
+    street: { type: DataTypes.STRING, allowNull: true },
+    zipcode: { type: DataTypes.STRING, allowNull: true },
+    phone: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: true },
+}, {
+    sequelize,
+    tableName: 'contacts',
+    timestamps: false,
+});
+
+Group.init({
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
+}, {
+    sequelize,
+    tableName: 'groups',
+    timestamps: false,
+});
+
+
+Contact.belongsToMany(Group, { through: 'ContactGroups', as: 'groups' });
+Group.belongsToMany(Contact, { through: 'ContactGroups', as: 'contacts' });
+
+export { Sequelize, sequelize, Contact, Group };
